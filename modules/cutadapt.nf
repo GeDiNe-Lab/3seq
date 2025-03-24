@@ -1,7 +1,7 @@
 process CUTADAPT {
     tag "$sample"
 
-    conda "${baseDir}/conda-envs/cutadapt.yml"
+    conda "modules/cutadapt.yml"
 
     input:
     tuple val(sample), path(reads)
