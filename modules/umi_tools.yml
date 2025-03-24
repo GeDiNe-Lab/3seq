@@ -1,0 +1,11 @@
+name: umi_tools
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - umi_tools
+  - pysam
+  - ca-certificates
+  - certifi
+  - openssl
