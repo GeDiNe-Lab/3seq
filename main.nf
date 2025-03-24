@@ -12,6 +12,6 @@ nextflow.enable.dsl = 2
 include { CUTADAPT } from './modules/cutadapt'
 
 workflow {
-    fa_ch = Channel.fromFilePairs("${params.input_dir}/*_{R1,R2}.fastq.gz")
+    fa_ch = Channel.fromFilePairs("${params.input_dir}/*_{R1,R2}.chr21.paired.fastq.gz")
     CUTADAPT(fa_ch)
 }
