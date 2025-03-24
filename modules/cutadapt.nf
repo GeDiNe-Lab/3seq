@@ -1,13 +1,15 @@
 process CUTADAPT {
     tag "$sample"
 
+    publishDir "${params.output_dir}/cutadapt", mode: 'copy'
     conda "modules/cutadapt.yml"
-
+    
     input:
     tuple val(sample), path(reads)
 
     output:
-    tuple val(sample), path("${sample}_R1.cut_clean.fastq"), path("${sample}_R2.cut_clean.fastq"), emit: trimmed_reads
+    val(sample), emit: sample
+    tuple path("${sample}_R1.cut_clean.fastq"), path("${sample}_R2.cut_clean.fastq"), emit: trimmed_reads
 
     script:
     """
