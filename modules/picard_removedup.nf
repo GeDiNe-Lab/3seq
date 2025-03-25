@@ -10,14 +10,15 @@ process PICARD_REMOVEDUP {
 
     output:
     val(sample), emit: sample
-    path "${sample}_R2.sortedByCoordinates.with_umis.with_RG.bam", emit: bam_R2_by_coord_umis_RG_Rdup
+    path "${sample}_R2.sortedByCoordinates.with_umis.with_RG.Rdup.bam", emit: bam_R2_by_coord_umis_RG_Rdup
 
     script:
     """
     picard -Xmx16G UmiAwareMarkDuplicatesWithMateCigar \
         -I $bam_R2_by_coord_umis_RG \
+        -M "${outdir}${sample}_R2.metrics.txt" \
         -O "${sample}_R2.sortedByCoordinates.with_umis.with_RG.Rdup.bam" \
-        -UMI_METRICS "${outdir}${sample}_R2.umi_metrics.txt"
+        -UMI_METRICS "${outdir}${sample}_R2.umi_metrics.txt" \
         --REMOVE_DUPLICATES true
     """
 }
