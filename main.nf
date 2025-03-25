@@ -12,6 +12,7 @@ include { STAR_ALIGN } from './modules/star_align'
 include { SAMBAMBA } from './modules/sambamba'
 include { FGBIO } from './modules/fgbio'
 include { PICARD_ASSIGN } from './modules/picard_assign'
+include { PICARD_REMOVEDUP } from './modules/picard_removedup'
 
 workflow {
     fa_ch = Channel.fromFilePairs("${params.input_dir}/*_{R1,R2}.chr21.paired.fastq.gz")
@@ -37,9 +38,12 @@ workflow {
     CUTADAPT.out.trimmed_reads,
     params.outdir)
 
-
+    
     PICARD_ASSIGN(FGBIO.out.sample,
     FGBIO.out.bam_R2_by_name_with_umis,
     params.outdir)
 
+    PICARD_REMOVEDUP(PICARD_ASSIGN.out.sample,
+    PICARD_ASSIGN.out.bam_R2_by_coord_umis_RG,
+    params.outdir)
 }
