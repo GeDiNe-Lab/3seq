@@ -5,8 +5,8 @@ process FGBIO {
 
     input:
     val sample
-    path trimmed_reads
     path bam_R2_by_name
+    path trimmed_reads
     path outdir
 
     output:
