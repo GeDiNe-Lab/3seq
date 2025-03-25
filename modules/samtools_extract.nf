@@ -1,22 +1,21 @@
-process SAMTOOLS {
+process SAMTOOLS_EXTRACT {
     tag "$sample"
 
-    conda "modules/picard.yml"
+    conda "modules/samtools.yml"
 
     input:
     val sample
-    path bam_R2_by_coord_umis_RG
+    path bam_R2_by_coord_umis_RG_Rdup
     path outdir
 
     output:
     val(sample), emit: sample
-    path "${sample}_R2.sortedByCoordinates.with_umis.with_RG.bam", emit: bam_R2_by_coord_umis_RG_Rdup
+    path "${sample}.fastq.gz", emit: fastq_extracted
 
     script:
     """
-    picard -Xmx16G UmiAwareMarkDuplicatesWithMateCigar \
-        -I $bam_R2_by_coord_umis_RG \
-        -O "${sample}_R2.sortedByCoordinates.with_umis.with_RG.Rdup.bam" \
-        --REMOVE_DUPLICATES true
+    samtools fastq \
+    -0 "${sample}.fastq.gz" \
+    -n $bam_R2_by_coord_umis_RG_Rdup
     """
 }
