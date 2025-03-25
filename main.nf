@@ -54,8 +54,8 @@ workflow {
     params.outdir)
 
     STAR_COUNT(
-        SAMTOOLS.out.sample,
-        SAMTOOLS.out.fastq_extracted,
+        SAMTOOLS_EXTRACT.out.sample,
+        SAMTOOLS_EXTRACT.out.fastq_extracted,
         params.genome_dir,
         params.outdir
     )
