@@ -1,5 +1,6 @@
 process STAR_ALIGN {
     tag "$sample"
+    label 'process_high'
 
     conda "modules/star.yml"
 
@@ -17,14 +18,12 @@ process STAR_ALIGN {
     def read2 = trimmed_reads instanceof Path ? trimmed_reads : trimmed_reads[1] // Sélection du deuxième read
     """
     STAR --runThreadN 5 \
-         --genomeDir ${genome_dir} \
+         --genomeDir "$genome_dir" \
          --readFilesIn ${read2} \
          --outFileNamePrefix ${sample}. \
          --outSAMtype BAM SortedByCoordinate \
          --quantMode GeneCounts \
          --twopassMode Basic \
          --readFilesCommand zcat
-    
-    mv ${sample}.Aligned.sortedByCoord.out.bam ${outdir}/
-   """
+    """
 }

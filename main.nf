@@ -19,6 +19,6 @@ workflow {
     STAR_ALIGN(CUTADAPT.out.sample,
     CUTADAPT.out.trimmed_reads,
     params.genome_dir,
-    params.outdir).view()
+    params.outdir)
 
 }
