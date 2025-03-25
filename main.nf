@@ -9,6 +9,7 @@ nextflow.enable.dsl = 2
 
 include { CUTADAPT } from './modules/cutadapt'
 include { STAR_ALIGN } from './modules/star_align'
+include { SAMBAMBA } from './modules/sambamba'
 
 workflow {
     fa_ch = Channel.fromFilePairs("${params.input_dir}/*_{R1,R2}.chr21.paired.fastq.gz")
@@ -20,5 +21,9 @@ workflow {
     params.genome_dir,
     params.outdir
     )
+
+    SAMBAMBA(STAR_ALIGN.out.sample, 
+    STAR_ALIGN.out.bam_R2,
+    params.outdir)
 
 }
