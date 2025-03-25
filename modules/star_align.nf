@@ -9,6 +9,7 @@ process STAR_ALIGN {
     input:
     val sample
     path trimmed_reads
+    path genome_dir
     path outdir
 
     output:
