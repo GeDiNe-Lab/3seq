@@ -4,16 +4,26 @@ process STAR_ALIGN {
     conda "modules/star.yml"
 
     input:
-    val sample
-    val trimmed_reads
-    path star_genome
+    val(sample)
+    path(trimmed_reads)
+    path genome_dir
+    path outdir
 
     output:
     path "${sample}_R2.star1.Aligned.sortedByCoord.out.bam", emit: bam_R2
 
-
     script:
+    def read2 = trimmed_reads instanceof Path ? trimmed_reads : trimmed_reads[1] // Sélection du deuxième read
     """
-    STAR --runThreadN 5 --genomeDir $star_genome --readFilesIn ${trimmed_reads[1]} --outSAMtype BAM SortedByCoordinate --quantMode GeneCounts --twopassMode Basic --outFileNamePrefix ${sample}_R2.star1.
-    """
+    STAR --runThreadN 5 \
+         --genomeDir ${genome_dir} \
+         --readFilesIn ${read2} \
+         --outFileNamePrefix ${sample}. \
+         --outSAMtype BAM SortedByCoordinate \
+         --quantMode GeneCounts \
+         --twopassMode Basic \
+         --readFilesCommand zcat
+    
+    mv ${sample}.Aligned.sortedByCoord.out.bam ${outdir}/
+   """
 }

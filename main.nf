@@ -5,7 +5,6 @@
                3Seq : a Nextflow pipeline for 
 ========================================================================================
 */
-
 nextflow.enable.dsl = 2
 
 
@@ -17,7 +16,9 @@ workflow {
     // fa_ch.view()
     CUTADAPT(fa_ch)
 
-    // CUTADAPT.out.trimmed_reads.view()
+    STAR_ALIGN(CUTADAPT.out.sample,
+    CUTADAPT.out.trimmed_reads,
+    params.genome_dir,
+    params.outdir).view()
 
-    STAR_ALIGN(CUTADAPT.out.trimmed_reads).view()
 }
