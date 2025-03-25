@@ -1,31 +1,22 @@
 process SAMBAMBA {
     tag "$sample"
-    label 'process_high'
+    label 'process_low'
 
-    conda "modules/star.yml"
+    conda "modules/sambamba.yml"
 
-    publishDir "${params.outdir}/star_align", mode: 'copy'
+    publishDir "${params.outdir}/sambamba_sort", mode: 'copy'
 
     input:
     val sample
-    path trimmed_reads
-    path genome_dir
+    path bam_R2
     path outdir
 
     output:
-    val sample, emit: samples
-    path "${sample}.Aligned.sortedByCoord.out.bam", emit: bam_R2
+    val sample, emit: sample
+    path "${sample}_R2.star1.sortedByName.bam", emit: bam_R2_by_name
 
     script:
-    def read2 = trimmed_reads instanceof Path ? trimmed_reads : trimmed_reads[1] // Sélection du deuxième read
     """
-    STAR --runThreadN 5 \
-         --genomeDir "$genome_dir" \
-         --readFilesIn ${read2} \
-         --outFileNamePrefix ${sample}. \
-         --outSAMtype BAM SortedByCoordinate \
-         --quantMode GeneCounts \
-         --twopassMode Basic \
-         --readFilesCommand zcat
+    sambamba sort -n -t 5 -o ${sample}_R2.star1.sortedByName.bam ${bam_R2}
     """
 }
