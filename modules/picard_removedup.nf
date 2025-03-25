@@ -16,7 +16,8 @@ process PICARD_REMOVEDUP {
     """
     picard -Xmx16G UmiAwareMarkDuplicatesWithMateCigar \
         -I $bam_R2_by_coord_umis_RG \
-        -O "${sample}_R2.sortedByCoordinates.with_umis.with_RG.Rdup.bam" \
+        -O ${sample}_R2.sortedByCoordinates.with_umis.with_RG.Rdup.bam \
+        --UMI_METRICS ${sample}_R2.umi_metrics.txt \
         --REMOVE_DUPLICATES true
     """
 }
