@@ -46,4 +46,12 @@ workflow {
     PICARD_REMOVEDUP(PICARD_ASSIGN.out.sample,
     PICARD_ASSIGN.out.bam_R2_by_coord_umis_RG,
     params.outdir)
+
+    STAR_COUNT(
+        SAMTOOLS.out.sample,
+        SAMTOOLS.out.fastq_extracted,
+        params.genome_dir,
+        params.outdir
+    )
+
 }
