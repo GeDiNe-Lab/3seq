@@ -13,7 +13,7 @@ process STAR_ALIGN {
     path outdir
 
     output:
-    val sample, emit: samples
+    val(sample), emit: sample
     path "${sample}.Aligned.sortedByCoord.out.bam", emit: bam_R2
 
     script:
