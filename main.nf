@@ -13,6 +13,8 @@ include { SAMBAMBA } from './modules/sambamba'
 include { FGBIO } from './modules/fgbio'
 include { PICARD_ASSIGN } from './modules/picard_assign'
 include { PICARD_REMOVEDUP } from './modules/picard_removedup'
+include { SAMTOOLS_EXTRACT } from './modules/samtools_extract'
+include { STAR_COUNT } from './modules/star_count'
 
 workflow {
     fa_ch = Channel.fromFilePairs("${params.input_dir}/*_{R1,R2}.chr21.paired.fastq.gz")
@@ -45,6 +47,10 @@ workflow {
 
     PICARD_REMOVEDUP(PICARD_ASSIGN.out.sample,
     PICARD_ASSIGN.out.bam_R2_by_coord_umis_RG,
+    params.outdir)
+
+    SAMTOOLS_EXTRACT(PICARD_REMOVEDUP.out.sample,
+    PICARD_REMOVEDUP.out.bam_R2_by_coord_umis_RG_Rdup,
     params.outdir)
 
     STAR_COUNT(
