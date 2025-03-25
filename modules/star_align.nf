@@ -10,8 +10,8 @@ process STAR_ALIGN {
     path outdir
 
     output:
-    val sample, emit: sample
-    path "${sample}_R2.star1.Aligned.sortedByCoord.out.bam", emit: bam_R2
+    val sample, emit: samples
+    path "${sample}.Aligned.sortedByCoord.out.bam", emit: bam_R2
 
     script:
     def read2 = trimmed_reads instanceof Path ? trimmed_reads : trimmed_reads[1] // Sélection du deuxième read
