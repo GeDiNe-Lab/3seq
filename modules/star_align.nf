@@ -3,10 +3,11 @@ process STAR_ALIGN {
 
     conda "modules/star.yml"
 
+    publishDir "${params.outdir}/star_align", mode: 'copy'
+
     input:
-    val(sample)
-    path(trimmed_reads)
-    path genome_dir
+    val sample
+    path trimmed_reads
     path outdir
 
     output:
@@ -17,7 +18,7 @@ process STAR_ALIGN {
     def read2 = trimmed_reads instanceof Path ? trimmed_reads : trimmed_reads[1] // Sélection du deuxième read
     """
     STAR --runThreadN 5 \
-         --genomeDir ${genome_dir} \
+         --genomeDir ${params.genome_dir} \
          --readFilesIn ${read2} \
          --outFileNamePrefix ${sample}. \
          --outSAMtype BAM SortedByCoordinate \

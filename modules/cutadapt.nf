@@ -1,7 +1,7 @@
 process CUTADAPT {
     tag "$sample"
 
-    publishDir "${params.output_dir}/cutadapt", mode: 'copy'
+    publishDir "${params.outdir}/cutadapt", mode: 'copy'
     conda "modules/cutadapt.yml"
     
     input:
@@ -23,6 +23,9 @@ process CUTADAPT {
         ${sample}_R1.temp.fastq
 
     mv ${sample}_R2.temp.fastq ${sample}_R2.cut_clean.fastq
+
+    gzip ${sample}_R1.cut_clean.fastq
+    gzip ${sample}_R1.cut_clean.fastq
 
     rm ${sample}_R1.temp.fastq
     """
