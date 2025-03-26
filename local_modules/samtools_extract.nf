@@ -1,6 +1,7 @@
 process SAMTOOLS_EXTRACT {
     tag "$sample"
-
+    label 'process_high'
+    
     conda "modules/samtools.yml"
 
     input:

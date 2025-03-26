@@ -21,7 +21,7 @@ process STAR_COUNT {
     STAR --runThreadN 5 \
         --genomeDir $genome_dir \
         --readFilesIn ${fastq_extracted} \
-        -- readFilesCommand zcat \
+        --readFilesCommand zcat \
         --outSAMtype BAM SortedByCoordinate \
         --quantMode GeneCounts \
         --outFileNamePrefix ${sample}_
