@@ -14,16 +14,16 @@ process STAR_COUNT {
 
     output:
     val sample, emit: sample
-    path "${sample}.star_count.", emit: bam_R2
+    path "${sample}_ReadsPerGene.out.tab", emit: counts
 
     script:
     """
     STAR --runThreadN 5 \
-        --genomeDir $genome_dir} \
+        --genomeDir $genome_dir \
         --readFilesIn ${fastq_extracted} \
-        -- readFilesCommand zcat \
+        --readFilesCommand zcat \
         --outSAMtype BAM SortedByCoordinate \
         --quantMode GeneCounts \
-        --outFileNamePrefix ${sample}.star_count.
+        --outFileNamePrefix ${sample}_
     """
 }
