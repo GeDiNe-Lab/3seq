@@ -1,9 +1,0 @@
-name: picard
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - picard
-  - ca-certificates
-  - openssl

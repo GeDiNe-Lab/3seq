@@ -1,9 +1,0 @@
-name: fgbio
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-dependencies:
-  - fgbio
-  - ca-certificates
-  - openssl
